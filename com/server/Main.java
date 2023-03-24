@@ -98,6 +98,13 @@ public class Main {
             break;
 
           case "6":
+            // for testing timeout
+//            try {
+//              Thread.sleep(2000);
+//            }catch(Exception e){
+//              e.printStackTrace();
+//            }
+            // for testing timeout
             functions.changeAirfareWithFlightID();
             break;
 
