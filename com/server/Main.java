@@ -24,16 +24,16 @@ public class Main {
 
     // Initialize Database
 		ArrayList<Flight> database = new ArrayList<>();
-    database.add(new Flight(1238945, "Singapore", "Malaysia", "24-04-2023 06:30:33", (float) 500.00, 200));
+    database.add(new Flight(1238945, "Singapore", "Malaysia", "24-04-2023 06:30:33", (float) 500.00, 400));
     database.add(new Flight(3123789, "Brazil", "Argentina", "15-05-2023 12:30:33", (float) 1000.00, 500));
-    database.add(new Flight(4895290, "NTU", "NUS", "22-04-2023 08:18:33", (float) 10.00, 10));
-    database.add(new Flight(1294890, "NUS", "NTU", "12-04-2023 10:12:19", (float) 50.00, 100));
+    database.add(new Flight(4895290, "America", "France", "22-04-2023 08:18:33", (float) 10.00, 300));
+    database.add(new Flight(1294890, "Singapore", "Korea", "12-04-2023 10:12:19", (float) 50.00, 300));
     database.add(new Flight(5980212, "China", "America", "21-04-2023 19:08:12", (float) 800.00, 400));
-    database.add(new Flight(9290359, "Russia", "Australia", "18-05-2023 10:30:33", (float) 2000.00, 900));
-    database.add(new Flight(5857203, "North Korea", "South Korea", "02-04-2023 16:32:39", (float) 1500.00, 800));
+    database.add(new Flight(9290359, "Russia", "Australia", "18-05-2023 10:30:33", (float) 2000.00, 700));
+    database.add(new Flight(5857203, "North Korea", "South Korea", "02-04-2023 16:32:39", (float) 1500.00, 500));
     database.add(new Flight(8587324, "New Zealand", "Japan", "20-09-2023 12:19:12", (float) 2500.00, 900));
-    database.add(new Flight(4751893, "Singapore", "Japan", "19-08-2023 14:31:19", (float) 700.00, 200));
-    database.add(new Flight(1994890, "Singapore", "Malaysia", "24-04-2023 07:30:33", (float) 900.00, 250));
+    database.add(new Flight(4751893, "Singapore", "Japan", "19-08-2023 14:31:19", (float) 700.00, 400));
+    database.add(new Flight(1994890, "Singapore", "Malaysia", "24-04-2023 07:30:33", (float) 900.00, 450));
 
     // Set localhost address
     InetAddress local = InetAddress.getByName("0.0.0.0");
@@ -53,7 +53,7 @@ public class Main {
       System.out.println("Packet received from client!!");
       
       // Get list of attribute values
-      ArrayList<AttributeValue> avList = FlightMarshaller.unmarshall(inputPacket.getData());
+      ArrayList<AttributeValue> avList = Marshaller.unmarshall(inputPacket.getData());
       Utils.printAV(avList);
       
       // Get option number
@@ -70,50 +70,45 @@ public class Main {
         Utils.sendPacket(serverSocket, history.get(requestId));
       }
       else{
-        // Initialize Functions object
+
+        // Initialize Functions
         Functions functions = new Functions(avList, database, serverSocket, inputPacket);
 
         switch(option){
           case "1":
+            // Return Flight Identifiers by processing Source and Destination
             functions.checkFlightID();
             break;
 
           case "2":
+            // Return Departure Time, Airfare and Seat Availability by processing Flight identifier
             functions.checkTimePriceSeatsWithFlightID();
             break;
 
           case "3":
+            // Book seats by processing Flight Identifier and number of seats to book
             functions.bookSeatsWithFlightID(listeners);
             break;
 
           case "4":
+            // Inform clients which are monitoring the server within the monitor interval via a callback
             functions.monitorSeatAvailability(listeners);
-            for(Map.Entry<SocketAddress, MonitorInfo> listener : listeners.entrySet()){
-              System.out.println(listener.getKey() + " : " + listener.getValue().getFlightIdentifier() + " " + listener.getValue().getMonitorInterval());
-            }
             break;
 
           case "5":
-            functions.checkCheapestDestinationsWithSource();
+            // Return all destinations by processing source
+            functions.checkAllDestinationsWithSource();
             break;
 
           case "6":
-            // for testing timeout
-//            try {
-//              Thread.sleep(2000);
-//            }catch(Exception e){
-//              e.printStackTrace();
-//            }
-            // for testing timeout
-            functions.changeAirfareWithFlightID();
+            // Increase or decrease Airfare by specifying Flight Identifier and Amount
+            functions.increaseOrDecreaseAirfareWithFlightID();
             break;
 
           case "7": 
+            // Change to At-least-once or At-most-once invocation semantics
             functions.changeInvocation();
             break;
-        }
-        for(Map.Entry<String, DatagramPacket> records : history.entrySet()){
-          System.out.println(records.getKey() + " : " + records.getValue());
         }
       }
    }

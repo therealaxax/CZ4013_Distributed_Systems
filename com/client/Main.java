@@ -24,18 +24,17 @@ public class Main {
     "Distributed Flight Booking System\n" +
     "------------------------------------\n" +
     "Select an option from [1-7]:\n" +
-    "1. Check Flight ID based on Source and Destination\n" +
-    "2. Check Departure Time, Airfare, Seat Availability via Flight ID\n" +
-    "3. Book Seats with Flight ID and Number of Seats\n" +
-    "4. Monitor Seat Availability\n" +
-    "5. Check Cheapest Flights via Source\n" +
-    "6. Increase/Decrease Airfare via Flight ID\n" +
-    "7. Set Invocation (1 for At Least Once, 2 for At Most Once)\n" +
+    "1. Check Flight Identifiers via Source and Destination\n" +
+    "2. Check Departure Time, Airfare, Seat Availability via Flight Identifier\n" +
+    "3. Book Seats via Flight Identifiers and Number of Seats\n" +
+    "4. Monitor Seat Availability via Flight Identifier and Monitor Interval\n" +
+    "5. Check All Destinations from Source\n" +
+    "6. Increase/Decrease Airfare via Flight Identifier and Amount specified\n" +
+    "7. Set Invocation Semantics (1 for At Least Once, 2 for At Most Once)\n" +
     "8. Exit\n" +
     "------------------------------------\n";
 
-    // InetSocketAddress serverAddress = new InetSocketAddress("192.168.50.212", 50001);
-    InetSocketAddress serverAddress = new InetSocketAddress("10.91.68.178", 50001);
+    InetSocketAddress serverAddress = new InetSocketAddress("10.91.68.178", 50001); 
     DatagramSocket clientSocket = new DatagramSocket();
 
     Scanner sc = new Scanner(System.in);
@@ -49,24 +48,31 @@ public class Main {
        int optionSelected = Integer.parseInt(sc.nextLine());
        switch(optionSelected) {
          case 1:
+           // Check Flight Identifier by specifying Source and Destination
            functions.checkFlightID();
            break;
          case 2:
+           // Check Departure Time, Airfare and Seat Availability by specifying Flight identifier
            functions.checkTimePriceSeatsWithFlightID();
            break;
          case 3:
+           // Book seats by specifying Flight Identifier and number of seats to book
            functions.bookSeatsWithFlightID();
            break;
          case 4:
+           // Monitor Seat Availability of flight by specifying Flight Identifier
            functions.monitorSeatAvailability();
            break;
          case 5:
-           functions.checkCheapestDestinationsWithSource(); // idempotent-function
+           // Check all Destinations by specifying source 
+           functions.checkAllDestinationsWithSource(); // idempotent-function
            break;
          case 6:
-           functions.changeAirfareWithFlightID(); // non-idempotent function
+           // Increase or decrease Airfare by specifying Flight Identifier and Amount
+           functions.increaseOrDecreaseAirfareWithFlightID(); // non-idempotent function
            break;
          case 7:
+           // Choose At-least-once or At-most-once invocation semantics
            functions.changeInvocation();
            break;
          case 8:

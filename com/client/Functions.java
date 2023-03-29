@@ -29,12 +29,14 @@ public class Functions {
     String destinationInput = sc.nextLine();
     AttributeValueString destinationAV = new AttributeValueString("destination", destinationInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(sourceAV);
     requestList.add(destinationAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);
@@ -51,11 +53,13 @@ public class Functions {
     Integer flightIdentifierInput = Integer.parseInt(sc.nextLine());
     AttributeValueInt flightIdentifierAV = new AttributeValueInt("flightIdentifier", flightIdentifierInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(flightIdentifierAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);
@@ -76,12 +80,14 @@ public class Functions {
     Integer numberOfSeatsInput = Integer.parseInt(sc.nextLine());
     AttributeValueInt numberOfSeatsAV = new AttributeValueInt("numberOfSeats", numberOfSeatsInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(flightIdentifierAV);
     requestList.add(numberOfSeatsAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);
@@ -102,6 +108,7 @@ public class Functions {
     Integer monitorIntervalInput = Integer.parseInt(sc.nextLine());
     AttributeValueInt monitorIntervalAV = new AttributeValueInt("monitorInterval", monitorIntervalInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
@@ -109,6 +116,7 @@ public class Functions {
     requestList.add(monitorIntervalAV);
     Utils.sendPacket(clientSocket, requestList, serverAddress);
 
+    // Listen to replies on server according to monitor interval specified
     long startTime = System.nanoTime();
     while(System.nanoTime() - startTime < monitorIntervalInput * NANOSEC_PER_SEC){
       System.out.println("Monitoring Seat Avalability for Flight ID " + flightIdentifierInput);
@@ -117,7 +125,7 @@ public class Functions {
   }
 
   // Case 5
-  public void checkCheapestDestinationsWithSource(){
+  public void checkAllDestinationsWithSource(){
     AttributeValueString optionAV = new AttributeValueString("option", "5");
     AttributeValueInt requestIdCountAV = new AttributeValueInt("requestIdCount", Main.requestIdCount++);
 
@@ -125,11 +133,13 @@ public class Functions {
     String sourceInput = sc.nextLine();
     AttributeValueString sourceAV = new AttributeValueString("source", sourceInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(sourceAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);
@@ -138,7 +148,7 @@ public class Functions {
   }
 
   // Case 6
-  public void changeAirfareWithFlightID(){
+  public void increaseOrDecreaseAirfareWithFlightID(){
     AttributeValueString optionAV = new AttributeValueString("option", "6");
     AttributeValueInt requestIdCountAV = new AttributeValueInt("requestIdCount", Main.requestIdCount++);
 
@@ -150,12 +160,14 @@ public class Functions {
     Integer priceChangeInput = Integer.parseInt(sc.nextLine());
     AttributeValueInt priceChangeAV = new AttributeValueInt("priceChange", priceChangeInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(flightIdentifierAV);
     requestList.add(priceChangeAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);
@@ -168,15 +180,17 @@ public class Functions {
     AttributeValueString optionAV = new AttributeValueString("option", "7");
     AttributeValueInt requestIdCountAV = new AttributeValueInt("requestIdCount", Main.requestIdCount++);
 
-    System.out.println("Enter Invocation option (1 for AtLeastOnce, 2 for AtMostOnce): ");
+    System.out.println("Choose Invocation Semantics (1 for At-Least-Once, 2 for At-Most-Once): ");
     Integer invocationInput = Integer.parseInt(sc.nextLine());
     AttributeValueInt invocationInputAV = new AttributeValueInt("invocation", invocationInput);
 
+    // Add all Attribute-Value pairs into an array
     ArrayList<AttributeValue> requestList = new ArrayList<>();
     requestList.add(optionAV);
     requestList.add(requestIdCountAV);
     requestList.add(invocationInputAV);
 
+    // Keep sending request to server if no reply is received
     boolean packetSentAndReceived = false;
     while(!packetSentAndReceived){
       Utils.sendPacket(clientSocket, requestList, serverAddress);

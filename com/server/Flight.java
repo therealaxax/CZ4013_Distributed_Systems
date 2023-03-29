@@ -10,15 +10,6 @@ public class Flight implements Serializable {
   float price; // 4 bytes
   Integer seatsAvailable; // 4 bytes
   
-  public Flight() {
-    this.flightIdentifier = 10;
-    this.source = "bob";
-    this.destination = "italy";
-    this.time = "24-02-2023 06:29:33";
-    this.price = 5.50f;
-    this.seatsAvailable = 100;
-  }
-
   public Flight(Integer flightIdentifier, String source, String destination, String time, float price, Integer seatsAvailable){
     this.flightIdentifier = flightIdentifier;
     this.source = source;
