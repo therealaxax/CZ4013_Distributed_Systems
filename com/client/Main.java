@@ -34,6 +34,7 @@ public class Main {
     "8. Exit\n" +
     "------------------------------------\n";
 
+    // Change to the server's inet address !!
     InetSocketAddress serverAddress = new InetSocketAddress("10.91.68.178", 50001); 
     DatagramSocket clientSocket = new DatagramSocket();
 

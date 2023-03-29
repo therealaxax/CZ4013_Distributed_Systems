@@ -105,7 +105,7 @@ public class Functions {
           }
         }
         else{
-          returnList.add(new AttributeValueString("Error Message", "There is/are only " + flight.getSeatsAvailable() + "seat/s left. Please try again!!!"));
+          returnList.add(new AttributeValueString("Error Message", "There is/are only " + flight.getSeatsAvailable() + " seat/s left. Please try again!!!"));
           break;
         }
       }
